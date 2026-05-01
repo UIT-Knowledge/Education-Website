@@ -9,6 +9,41 @@ const videoGrid = document.getElementById('video-grid');
 const coursesGrid = document.getElementById('courses-grid');
 const merchGrid = document.getElementById('merch-grid');
 
+// Hero Orbs Interactive Proximity
+const hero = document.getElementById('gioi-thieu');
+const orbs = document.querySelectorAll('.hero-orb');
+if (hero && orbs.length > 0) {
+    hero.addEventListener('mousemove', (e) => {
+        const mx = e.clientX;
+        const my = e.clientY;
+        
+        orbs.forEach(orb => {
+            const rect = orb.getBoundingClientRect();
+            const ox = rect.left + rect.width / 2;
+            const oy = rect.top + rect.height / 2;
+            
+            const dx = mx - ox;
+            const dy = my - oy;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            const radius = 300; // Khoảng cách bắt đầu tác động
+            
+            if (dist < radius) {
+                const power = (radius - dist) / radius;
+                // Tăng lực đẩy né tránh (0.4) và giảm tối đa sự phóng to (1.05)
+                const moveX = dx * 0.4 * power;
+                const moveY = dy * 0.4 * power;
+                const scale = 1 + (0.05 * power);
+                
+                orb.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
+                orb.style.opacity = (0.45 + (0.1 * power)).toString();
+            } else {
+                orb.style.transform = '';
+                orb.style.opacity = '';
+            }
+        });
+    });
+}
+
 // Security: Sanitization helper to prevent XSS
 function escapeHTML(str) {
     if (!str) return '';
@@ -246,6 +281,11 @@ function initMerchCarousel() {
     const carousel = track?.closest('.merch-carousel');
     if (!track || !carousel) return;
 
+    // Clear existing interval if any
+    if (carousel._autoRotateInterval) {
+        clearInterval(carousel._autoRotateInterval);
+    }
+
     const prevButton = carousel.querySelector('.merch-arrow-prev');
     const nextButton = carousel.querySelector('.merch-arrow-next');
     let slides = Array.from(track.querySelectorAll('.merch-card:not([data-clone])'));
@@ -293,6 +333,14 @@ function initMerchCarousel() {
         setPosition(true);
     };
 
+    // Auto-rotate logic
+    carousel._autoRotateInterval = setInterval(() => move(1), 3500);
+
+    const resetAutoRotate = () => {
+        clearInterval(carousel._autoRotateInterval);
+        carousel._autoRotateInterval = setInterval(() => move(1), 3500);
+    };
+
     track.ontransitionend = (e) => {
         if (e.target !== track || e.propertyName !== 'transform') return;
 
@@ -307,8 +355,19 @@ function initMerchCarousel() {
         isAnimating = false;
     };
 
-    if (prevButton) prevButton.onclick = () => move(-1);
-    if (nextButton) nextButton.onclick = () => move(1);
+    if (prevButton) prevButton.onclick = () => {
+        move(-1);
+        resetAutoRotate();
+    };
+    if (nextButton) nextButton.onclick = () => {
+        move(1);
+        resetAutoRotate();
+    };
+
+    // Pause on hover
+    carousel.addEventListener('mouseenter', () => clearInterval(carousel._autoRotateInterval));
+    carousel.addEventListener('mouseleave', resetAutoRotate);
+
     setPosition(false);
 }
 

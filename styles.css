@@ -332,8 +332,8 @@ select {
 
 .logo-icon,
 .logo-image {
-    width: 42px;
-    height: 42px;
+    width: 64px;
+    height: 64px;
     border-radius: 10px;
     display: grid;
     place-items: center;
@@ -974,7 +974,7 @@ select {
 }
 
 .step-title {
-    font-size: 22px;
+    font-size: 25px;
     font-weight: 800;
     letter-spacing: -0.03em;
     color: var(--light-text);
@@ -982,7 +982,7 @@ select {
 }
 
 .step-description {
-    font-size: 16px;
+    font-size: 19px;
     line-height: 1.6;
     color: var(--light-text-secondary);
     max-width: 280px;
@@ -1091,11 +1091,11 @@ select {
     }
 
     .step-title {
-        font-size: 20px;
+        font-size: 23px;
     }
 
     .step-description {
-        font-size: 15px;
+        font-size: 18px;
         max-width: 100%;
     }
 }
@@ -3174,19 +3174,14 @@ select {
     100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
 }
 
-@keyframes float-orb-1 {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    100% { transform: translate(20px, -40px) rotate(360deg); }
+@keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
-@keyframes float-orb-2 {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    100% { transform: translate(-30px, 20px) rotate(-360deg); }
-}
-
-@keyframes float-orb-3 {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    100% { transform: translate(40px, 30px) rotate(180deg); }
+@keyframes rotate-slow-reverse {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
 }
 
 @keyframes grain-shift {
@@ -3207,19 +3202,36 @@ select {
     100% { transform: translateX(100%); }
 }
 
+.hero-orb-wrapper {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.orbit-1 { animation: rotate-slow 40s linear infinite; }
+.orbit-2 { animation: rotate-slow-reverse 53s linear infinite; }
+.orbit-3 { animation: rotate-slow 67s linear infinite; }
+.orbit-4 { animation: rotate-slow 45s linear infinite; }
+.orbit-5 { animation: rotate-slow-reverse 55s linear infinite; }
+.orbit-6 { animation: rotate-slow 60s linear infinite; }
+.orbit-7 { animation: rotate-slow 35s linear infinite; }
+.orbit-8 { animation: rotate-slow-reverse 70s linear infinite; }
+.orbit-9 { animation: rotate-slow 40s linear infinite; }
+
 .hero-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
+    filter: blur(100px);
     pointer-events: none;
-    z-index: 0;
-    opacity: 0.6;
+    opacity: 0.45;
+    mix-blend-mode: screen;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    will-change: transform, opacity;
 }
 
-
-
 @media (prefers-reduced-motion: reduce) {
-    .reveal, .reveal-mask > *, .hero-orb, .hero-glow {
+    .reveal, .reveal-mask > *, .hero-orb, .hero-glow, .hero-orb-wrapper {
         animation: none !important;
         transition: none !important;
         opacity: 1 !important;
@@ -3256,6 +3268,34 @@ select {
 
     :root {
         --container: 1800px; /* Tối ưu hóa cho các màn hình Ultra-wide cực lớn */
+    }
+}
+
+/* --- QR Modal scaling for large screens --- */
+@media (min-width: 1200px) {
+    .qr-modal-container {
+        max-width: 680px;
+    }
+
+    .qr-image-wrapper {
+        width: 520px;
+        min-height: 520px;
+    }
+
+    .qr-modal-body {
+        padding: 32px 36px;
+    }
+
+    .qr-modal-header {
+        padding: 24px 32px;
+    }
+
+    .qr-modal-header h3 {
+        font-size: 26px;
+    }
+
+    .qr-modal-footer {
+        padding: 24px 32px;
     }
 }
 
