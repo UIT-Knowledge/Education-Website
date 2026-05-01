@@ -1670,10 +1670,26 @@ select {
     width: 100%;
     transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
+    /* Auto rotate via CSS */
+    animation: merch-auto-rotate 17.5s infinite ease-in-out;
+}
+
+.merch-carousel:hover .merch-track {
+    animation-play-state: paused;
+}
+
+@keyframes merch-auto-rotate {
+    0%, 15% { transform: translateX(0); }
+    20%, 35% { transform: translateX(-100%); }
+    40%, 55% { transform: translateX(-200%); }
+    60%, 75% { transform: translateX(-300%); }
+    80%, 95% { transform: translateX(-400%); }
+    100% { transform: translateX(0); }
 }
 
 .merch-track.no-transition {
     transition: none;
+    animation: none;
 }
 
 .merch-card {
@@ -1959,7 +1975,7 @@ select {
 
 .footer-title {
     font-family: var(--font-display);
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 20px;
@@ -1975,7 +1991,7 @@ select {
 .footer-links a {
     color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
-    font-size: 15px;
+    font-size: 17px;
     transition: color var(--transition);
 }
 
@@ -1995,7 +2011,7 @@ select {
     gap: 12px;
     color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.5;
 }
 
@@ -3226,9 +3242,15 @@ select {
     pointer-events: none;
     opacity: 0.45;
     mix-blend-mode: screen;
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-    will-change: transform, opacity;
+    transition: transform 1s ease-out, opacity 1s ease-out;
+    will-change: transform;
 }
+
+/* Hiệu ứng dạt hạt khi rê chuột vào vùng Hero (CSS-only) */
+.hero:hover .hero-orb-1 { transform: translate(-40px, -40px) scale(1.1); }
+.hero:hover .hero-orb-2 { transform: translate(40px, 40px) scale(1.1); }
+.hero:hover .hero-orb-3 { transform: translate(40px, -40px) scale(1.1); }
+.hero:hover .hero-orb-4 { transform: translate(-40px, 40px) scale(1.1); }
 
 @media (prefers-reduced-motion: reduce) {
     .reveal, .reveal-mask > *, .hero-orb, .hero-glow, .hero-orb-wrapper {
