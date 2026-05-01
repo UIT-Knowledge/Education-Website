@@ -20,17 +20,16 @@ function escapeHTML(str) {
 // Adaptive header: detect dark/light section under header
 function updateHeaderTheme() {
     const headerRect = header.getBoundingClientRect();
-    // Using bottom of header for a more responsive feel as you scroll down
-    const triggerPoint = headerRect.bottom - 8;
+    const triggerPoint = headerRect.bottom;
     
-    // Find which section the header bottom overlaps
     const allSections = document.querySelectorAll('section, footer');
     let onDark = false;
     
+    // Find first section extending below header bottom
+    // This switches theme the moment header passes a section's bottom
     for (const section of allSections) {
         const rect = section.getBoundingClientRect();
-        if (triggerPoint >= rect.top && triggerPoint < rect.bottom) {
-            // Check if this section has a dark background
+        if (rect.bottom > triggerPoint) {
             const isDarkSection = section.classList.contains('section-dark') 
                 || section.classList.contains('hero') 
                 || section.classList.contains('footer-dark');
@@ -47,11 +46,12 @@ window.addEventListener('scroll', () => {
     const scrolled = window.scrollY;
     document.documentElement.style.setProperty('--scroll-y', `${scrolled}px`);
 
-    // Change to scrolled state exactly when leaving the hero section
+    // Change to scrolled state slightly earlier to ensure smooth transition
     const hero = document.getElementById('gioi-thieu');
     const heroBottom = hero ? hero.offsetHeight : 0;
     
-    if (window.scrollY > (heroBottom - header.offsetHeight)) {
+    // Using a 10px buffer to start the transition just before leaving the hero
+    if (window.scrollY > (heroBottom - header.offsetHeight - 10)) {
         header.classList.add('scrolled');
     } else {
         header.classList.remove('scrolled');
@@ -77,7 +77,7 @@ navLinks.forEach(link => {
 });
 
 function updateActiveNav() {
-    const triggerLine = header.getBoundingClientRect().bottom + 12;
+    const triggerLine = header.getBoundingClientRect().bottom + 1;
 
     const triggerMap = [
         { navId: 'gioi-thieu', el: document.getElementById('gioi-thieu') },
