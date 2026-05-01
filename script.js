@@ -246,29 +246,29 @@ function initMerchCarousel() {
     const carousel = track?.closest('.merch-carousel');
     if (!track || !carousel) return;
 
-    // Clear existing interval if any
-    if (carousel._autoRotateInterval) {
-        clearInterval(carousel._autoRotateInterval);
-    }
-
+    // Clear existing interval and events if any
+    if (carousel._autoRotateInterval) clearInterval(carousel._autoRotateInterval);
+    
     const prevButton = carousel.querySelector('.merch-arrow-prev');
     const nextButton = carousel.querySelector('.merch-arrow-next');
     let slides = Array.from(track.querySelectorAll('.merch-card:not([data-clone])'));
     if (!slides.length) return;
 
+    // Remove existing clones to re-init cleanly
     track.querySelectorAll('[data-clone="true"]').forEach(clone => clone.remove());
     slides = Array.from(track.querySelectorAll('.merch-card:not([data-clone])'));
 
-    if (slides.length === 1) {
+    if (slides.length <= 1) {
         track.style.transform = 'translateX(0)';
-        prevButton?.setAttribute('hidden', '');
-        nextButton?.setAttribute('hidden', '');
+        if (prevButton) prevButton.style.display = 'none';
+        if (nextButton) nextButton.style.display = 'none';
         return;
     }
 
-    prevButton?.removeAttribute('hidden');
-    nextButton?.removeAttribute('hidden');
+    if (prevButton) prevButton.style.display = 'flex';
+    if (nextButton) nextButton.style.display = 'flex';
 
+    // Infinite loop clones
     const firstClone = slides[0].cloneNode(true);
     const lastClone = slides[slides.length - 1].cloneNode(true);
     firstClone.dataset.clone = 'true';
@@ -278,14 +278,16 @@ function initMerchCarousel() {
     track.appendChild(firstClone);
     track.insertBefore(lastClone, slides[0]);
 
-    let index = slides.length > 1 ? 1 : 0;
+    let index = 1;
     let isAnimating = false;
+    const autoRotateDelay = 3500;
 
     const setPosition = (withTransition = true) => {
         track.classList.toggle('no-transition', !withTransition);
         track.style.transform = `translateX(-${index * 100}%)`;
 
         if (!withTransition) {
+            // Force reflow
             track.offsetHeight;
             track.classList.remove('no-transition');
         }
@@ -296,16 +298,28 @@ function initMerchCarousel() {
         isAnimating = true;
         index += direction;
         setPosition(true);
+        resetAutoRotate();
+    };
+
+    const startAutoRotate = () => {
+        if (carousel._autoRotateInterval) clearInterval(carousel._autoRotateInterval);
+        carousel._autoRotateInterval = setInterval(() => {
+            move(1);
+        }, autoRotateDelay);
+    };
+
+    const resetAutoRotate = () => {
+        startAutoRotate();
     };
 
     track.ontransitionend = (e) => {
         if (e.target !== track || e.propertyName !== 'transform') return;
 
         const realCount = slides.length;
-        if (index === realCount + 1) {
+        if (index >= realCount + 1) {
             index = 1;
             setPosition(false);
-        } else if (index === 0) {
+        } else if (index <= 0) {
             index = realCount;
             setPosition(false);
         }
@@ -315,7 +329,12 @@ function initMerchCarousel() {
     if (prevButton) prevButton.onclick = () => move(-1);
     if (nextButton) nextButton.onclick = () => move(1);
 
+    // Pause on hover
+    carousel.onmouseenter = () => clearInterval(carousel._autoRotateInterval);
+    carousel.onmouseleave = () => startAutoRotate();
+
     setPosition(false);
+    startAutoRotate();
 }
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
