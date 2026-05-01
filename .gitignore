@@ -1,0 +1,51 @@
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build output
+dist/
+
+# AI agent tooling & configuration
+.agent/
+.agents/
+.claude/
+.omc/
+.osgrep/
+.kilocode/
+.kilo/
+.remember/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Scratch / temp
+scratch/
+
+# Stale design references (DESIGN_merged.md is authoritative)
+design-system/
+
+# Stale backup
+styles.css.bak
+
+# Screenshot artifacts
+hero-spacing-check.png
+
+# Design notes / inspiration (not application source)
+redesign_inspiration.md
+
+# Local MCP configuration
+.mcp.json

@@ -1,0 +1,14 @@
+{
+    "name": "uit-knowledge",
+    "version": "1.0.0",
+    "description": "UIT Knowledge - Ôn môn trọng tâm ở UIT",
+    "main": "index.html",
+    "scripts": {
+        "dev": "npx -y serve .",
+        "start": "npx -y serve .",
+        "build": "node replace-env.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
