@@ -145,13 +145,6 @@ select {
     position: fixed;
     inset: 0 0 auto;
     z-index: 1000;
-    padding: 20px 0;
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    transition: background var(--transition), border-color var(--transition), padding var(--transition), box-shadow var(--transition), color var(--transition);
-}
-
-/* Default scrolled state: over LIGHT sections → dark glass + white text */
-.header.scrolled {
     padding: 14px 0;
     background: rgba(23, 23, 23, 0.72);
     backdrop-filter: blur(16px);
@@ -159,10 +152,15 @@ select {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-    color: #fafafa;
+    transition: background 180ms var(--ease-out-expo), border-color 180ms var(--ease-out-expo), box-shadow var(--transition), color 180ms var(--ease-out-expo);
 }
 
-/* Header on dark hero (not scrolled) → transparent + white text */
+/* Scrolled state: padding stays consistent */
+.header.scrolled {
+    /* Padding removed to stay 14px from base class */
+}
+
+/* Header on dark hero (not scrolled) → white text */
 .header:not(.scrolled) {
     color: #fafafa;
 }
@@ -889,141 +887,131 @@ select {
 
 .how-it-works-narrative {
     position: relative;
-    max-width: 900px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    justify-items: center;
 }
 
-.narrative-path {
+/* Horizontal connector line between steps */
+.how-it-works-narrative::before {
+    content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 2px;
-    background: linear-gradient(to bottom, 
-        transparent, 
-        rgba(62, 207, 142, 0.2) 10%, 
-        rgba(62, 207, 142, 0.2) 90%, 
-        transparent
+    top: 78px;
+    left: calc(16.67% + 24px);
+    right: calc(16.67% + 24px);
+    height: 2px;
+    background: linear-gradient(to right, 
+        transparent 0%,
+        rgba(59, 130, 246, 0.35) 8%,
+        rgba(59, 130, 246, 0.35) 92%,
+        transparent 100%
     );
-    transform: translateX(-50%);
     z-index: 0;
+    pointer-events: none;
 }
 
 .narrative-step {
     position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 60px;
+    text-align: center;
+    gap: 16px;
+    padding: 40px 28px 36px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.04) 0%, rgba(255, 255, 255, 0.8) 60%);
+    border: 1.5px solid rgba(59, 130, 246, 0.15);
+    border-radius: var(--radius-xl);
     z-index: 1;
-    transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1), transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    width: 100%;
+    max-width: 340px;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.06);
 }
 
 .narrative-step.reveal {
     opacity: 0;
-    filter: blur(8px);
-    transform: translateY(40px);
-    transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+    filter: blur(6px);
+    transform: translateY(30px);
+    transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .narrative-step.reveal.visible {
     opacity: 1;
+    filter: blur(0);
     transform: translateY(0);
 }
 
+.narrative-step:hover {
+    transform: translateY(-6px);
+    box-shadow: 
+        0 20px 40px -12px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
 .narrative-step .step-content {
-    flex: 1;
-    position: relative;
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.2s;
-}
-
-.narrative-step.step-reverse .step-content {
-    transform: translateX(30px);
-}
-
-.narrative-step.reveal.visible .step-content {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.narrative-step .step-visual {
-    flex: 1;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    opacity: 0;
-    transform: translateX(30px) scale(0.9);
-    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s;
-}
-
-.narrative-step.step-reverse .step-visual {
-    transform: translateX(-30px) scale(0.9);
-}
-
-.narrative-step.reveal.visible .step-visual {
-    opacity: 1;
-    transform: translateX(0) scale(1);
+    gap: 8px;
 }
 
 .step-counter {
-    position: absolute;
-    top: -30px;
-    left: -15px;
+    position: static;
     font-family: var(--font-display);
-    font-size: 90px;
+    font-size: 42px;
     font-weight: 900;
     line-height: 1;
-    color: rgba(62, 207, 142, 0.05);
-    z-index: -1;
+    color: #3b82f6;
+    opacity: 0.35;
     pointer-events: none;
     user-select: none;
-}
-
-.step-reverse .step-counter {
-    left: auto;
-    right: -15px;
+    margin-bottom: 4px;
 }
 
 .step-title {
-    font-size: 30px;
+    font-size: 22px;
     font-weight: 800;
-    letter-spacing: -0.04em;
-    margin-bottom: 16px;
+    letter-spacing: -0.03em;
     color: var(--light-text);
+    margin-bottom: 8px;
 }
 
 .step-description {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.6;
     color: var(--light-text-secondary);
-    max-width: 400px;
+    max-width: 280px;
 }
 
-.step-visual {
-    flex: 1;
+.narrative-step .step-visual {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 12px;
 }
 
 .visual-card {
     position: relative;
-    width: 280px;
-    height: 280px;
-    border-radius: 32px;
+    width: 160px;
+    height: 160px;
+    border-radius: 24px;
     display: grid;
     place-items: center;
-    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     cursor: default;
 }
 
+.narrative-step:hover .visual-card {
+    transform: scale(1.06);
+}
+
 .visual-card:hover {
-    transform: scale(1.02) rotate(2deg);
+    transform: scale(1.08) rotate(2deg);
 }
 
 .glass-premium {
@@ -1037,10 +1025,10 @@ select {
 
 .visual-icon-aura {
     position: absolute;
-    width: 140px;
-    height: 140px;
-    background: var(--accent);
-    filter: blur(50px);
+    width: 90px;
+    height: 90px;
+    background: #3b82f6;
+    filter: blur(40px);
     opacity: 0.15;
     border-radius: 50%;
     animation: aura-pulse 4s ease-in-out infinite;
@@ -1052,68 +1040,63 @@ select {
 }
 
 .visual-icon {
-    width: 64px;
-    height: 64px;
-    color: var(--accent-strong);
+    width: 44px;
+    height: 44px;
+    color: #2563eb;
     z-index: 2;
-    filter: drop-shadow(0 0 10px rgba(62, 207, 142, 0.3));
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));
 }
 
-.accent-emerald .visual-icon { color: #10b981; }
-.accent-emerald .visual-icon-aura { background: #10b981; }
+.accent-emerald .visual-icon { color: #3b82f6; }
+.accent-emerald .visual-icon-aura { background: #3b82f6; }
 
-.accent-purple .visual-icon { color: #8b5cf6; }
-.accent-purple .visual-icon-aura { background: #8b5cf6; }
+.accent-purple .visual-icon { color: #3b82f6; }
+.accent-purple .visual-icon-aura { background: #3b82f6; }
 
 .visual-accent-line {
     position: absolute;
-    bottom: 40px;
-    left: 40px;
-    right: 40px;
-    height: 4px;
-    background: linear-gradient(to right, var(--accent), transparent);
+    bottom: 28px;
+    left: 28px;
+    right: 28px;
+    height: 3px;
+    background: linear-gradient(to right, #3b82f6, transparent);
     border-radius: 2px;
-    opacity: 0.3;
+    opacity: 0.25;
 }
 
 /* Mobile optimizations for Narrative */
-@media (max-width: 768px) {
+@media (max-width: 860px) {
     .how-it-works-narrative {
-        gap: 80px;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 480px;
     }
-    
-    .narrative-path {
-        left: 20px;
-        transform: none;
+
+    .how-it-works-narrative::before {
+        display: none;
     }
-    
-    .narrative-step, 
-    .narrative-step.step-reverse {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 40px;
-        padding-left: 50px;
+
+    .narrative-step {
+        padding: 32px 20px 28px;
     }
-    
-    .step-visual {
-        width: 100%;
-        justify-content: flex-start;
-    }
-    
+
     .visual-card {
-        width: 240px;
-        height: 240px;
-        border-radius: 30px;
+        width: 140px;
+        height: 140px;
+        border-radius: 20px;
     }
-    
+
     .step-counter {
-        font-size: 80px;
-        top: -30px;
-        left: -10px;
+        font-size: 38px;
     }
-    
+
     .step-title {
-        font-size: 28px;
+        font-size: 20px;
+    }
+
+    .step-description {
+        font-size: 15px;
+        max-width: 100%;
     }
 }
 
