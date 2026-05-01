@@ -3015,6 +3015,8 @@ select {
 }
 
 .form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
 .form-group select,
 .form-group textarea {
     padding: 12px 16px;
@@ -3373,3 +3375,201 @@ select {
         grid-template-columns: 1fr;
     }
 }
+
+/* === PREMIUM MERCH MODAL === */
+.merch-modal-premium {
+    max-width: 620px !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 
+        0 4px 24px -1px rgba(0, 0, 0, 0.1),
+        0 32px 64px -12px rgba(0, 0, 0, 0.2) !important;
+}
+
+.qr-modal-header .header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.header-subtitle-modal {
+    font-size: 14px;
+    color: var(--light-text-muted);
+    font-weight: 500;
+}
+
+.merch-form-premium {
+    display: flex;
+    flex-direction: column;
+    gap: 24px !important;
+    padding: 8px 0;
+}
+
+.merch-product-highlight {
+    position: relative;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, rgba(62, 207, 142, 0.08) 0%, rgba(189, 187, 255, 0.08) 100%);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(62, 207, 142, 0.15);
+    overflow: hidden;
+}
+
+.product-highlight-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.product-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    color: var(--accent-strong);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.product-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--light-text-muted);
+}
+
+.product-name {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent-strong);
+}
+
+.product-highlight-accent {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(62, 207, 142, 0.1) 0%, transparent 70%);
+}
+
+.form-group-premium {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group-premium label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--light-text);
+}
+
+.form-group-premium label svg {
+    color: var(--accent-strong);
+    opacity: 0.8;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.form-group-premium input,
+.form-group-premium textarea {
+    width: 100%;
+    padding: 14px 18px !important;
+    background: #fff !important;
+    border: 1px solid var(--light-border-strong) !important;
+    border-radius: var(--radius-md) !important;
+    font-size: 16px !important;
+    transition: all 0.3s var(--ease-premium) !important;
+    color: var(--light-text) !important;
+}
+
+.form-group-premium input:focus,
+.form-group-premium textarea:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 8px 24px rgba(62, 207, 142, 0.08) !important;
+    outline: none;
+}
+
+.input-focus-border {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: all 0.4s var(--ease-premium);
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.form-group-premium input:focus + .input-focus-border,
+.form-group-premium textarea:focus + .input-focus-border {
+    width: calc(100% - 32px);
+}
+
+.registration-footer-premium {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.hover-lift {
+    transition: transform 0.3s var(--ease-premium), box-shadow 0.3s var(--ease-premium) !important;
+}
+
+.hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(62, 207, 142, 0.3) !important;
+}
+
+.footer-security-note {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--light-text-muted);
+    font-weight: 500;
+}
+
+.footer-security-note svg {
+    opacity: 0.6;
+}
+
+/* Animations */
+@keyframes premium-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+        filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+.merch-modal-premium.active {
+    animation: premium-slide-up 0.5s var(--ease-premium) forwards;
+}
+

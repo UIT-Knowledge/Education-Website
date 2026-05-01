@@ -5,6 +5,9 @@ const sections = document.querySelectorAll('section[id], footer[id]');
 const navLinks = document.querySelectorAll('.nav-link');
 const revealElements = document.querySelectorAll('.reveal');
 const counters = document.querySelectorAll('.hero-stat-number');
+const videoGrid = document.getElementById('video-grid');
+const coursesGrid = document.getElementById('courses-grid');
+const merchGrid = document.getElementById('merch-grid');
 
 // Security: Sanitization helper to prevent XSS
 function escapeHTML(str) {
@@ -632,7 +635,8 @@ function openMerchModal(name, qr, price) {
     document.getElementById('merch-item-name').value = name;
     document.getElementById('merch-item-price').value = price;
     document.getElementById('merch-item-qr').value = qr;
-    document.getElementById('merch-display-name').textContent = name;
+    const displayName = document.getElementById('merch-display-name');
+    if (displayName) displayName.textContent = name;
     
     modal.style.display = 'flex';
     modal.classList.add('active');
@@ -774,11 +778,10 @@ async function fetchSettings() {
 }
 
 function renderVideos(videos) {
-    const container = document.getElementById('video-grid');
-    if (!container) return;
+    if (!videoGrid) return;
 
     if (!videos || videos.length === 0) {
-        container.innerHTML = `
+        videoGrid.innerHTML = `
             <div style="grid-column: 1/-1; padding: 48px; text-align: center; color: var(--dark-text-muted); font-family: var(--font-mono); font-size: 14px; border: 1px dashed var(--dark-border); border-radius: var(--radius-lg);">
                 <p>RESOURCES_COMING_SOON...</p>
             </div>
@@ -786,7 +789,7 @@ function renderVideos(videos) {
         return;
     }
 
-    container.innerHTML = videos.map((video, index) => `
+    videoGrid.innerHTML = videos.map((video, index) => `
         <article class="video-card ${video.is_featured ? 'featured' : ''} reveal">
             <div class="video-embed lite-youtube" data-video-id="${video.video_id}">
                 <div class="video-thumb" style="background-image: url('${video.thumbnail_url || `https://img.youtube.com/vi/${video.video_id}/maxresdefault.jpg`}')">
@@ -807,7 +810,7 @@ function renderVideos(videos) {
     `).join('');
 
     // Observe new reveal elements
-    observeNewElements(container);
+    observeNewElements(videoGrid);
 
     // Re-initialize YouTube embeds for dynamic content
     initYoutubeEmbeds();
@@ -829,10 +832,9 @@ function renderVideos(videos) {
 }
 
 function renderCourses() {
-    const container = document.getElementById('courses-grid');
-    if (!container) return;
+    if (!coursesGrid) return;
 
-    container.innerHTML = `
+    coursesGrid.innerHTML = `
         <article class="course-card reveal">
             <div class="course-image glass-effect">
                 <div class="course-badge badge-online">Online</div>
@@ -885,7 +887,7 @@ function renderCourses() {
     `;
 
     // Observe new reveal elements
-    observeNewElements(container);
+    observeNewElements(coursesGrid);
 }
 
 function injectSchema(id, schemaObj) {
@@ -900,8 +902,7 @@ function injectSchema(id, schemaObj) {
 }
 
 function renderMerch(merchList) {
-    const container = document.getElementById('merch-grid');
-    if (!container) return;
+    if (!merchGrid) return;
 
     function formatVND(value) {
         if (!value) return '';
@@ -921,7 +922,7 @@ function renderMerch(merchList) {
         return;
     }
 
-    container.innerHTML = merchList.map(merch => `
+    merchGrid.innerHTML = merchList.map(merch => `
         <article class="merch-card reveal">
             <div class="merch-image">
                 ${merch.image_url ?
@@ -944,7 +945,7 @@ function renderMerch(merchList) {
     `).join('');
 
     // Observe new reveal elements
-    observeNewElements(container);
+    observeNewElements(merchGrid);
 
     initMerchCarousel();
 }

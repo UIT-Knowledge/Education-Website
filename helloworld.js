@@ -6,7 +6,7 @@ const SECURITY = {
     TOKEN_GRACE_PERIOD_MS: 30 * 1000,
     MIN_PASSWORD_LENGTH: 8,
     MAX_EMAIL_LENGTH: 254,
-    ALLOWED_EMAIL_DOMAINS: ['uit.edu.vn']
+    ALLOWED_EMAIL_DOMAINS: []
 };
 
 function escapeHTML(str) {
@@ -146,17 +146,15 @@ function computeBackoffDelay() {
     return Math.min(base * Math.pow(2, factor) + jitter, 30000);
 }
 
-async function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 async function logAuditEvent(eventType, metadata = {}) {
     try {
-        const session = await supabaseClient.auth.getSession();
+        if (!supabaseClient) return;
+        const TIMEOUT_MS = 5000;
+        const { data: { session } } = await supabaseClient.auth.getSession();
         const payload = {
             event_type: eventType,
-            user_id: session?.data?.session?.user?.id || null,
-            email: session?.data?.session?.user?.email || null,
+            user_id: session?.user?.id || null,
+            email: session?.user?.email || null,
             ip_address: null,
             user_agent: (navigator.userAgent || '').substring(0, 512),
             metadata: {
@@ -167,24 +165,39 @@ async function logAuditEvent(eventType, metadata = {}) {
             }
         };
         await supabaseClient.from('audit_logs').insert([payload]);
-    } catch { }
+    } catch (e) {
+        console.warn('Audit log failed:', e);
+    }
 }
 
 async function init() {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if (session) {
-        const token = session.access_token;
-        if (isTokenExpired(token)) {
-            const { data: refreshData, error: refreshError } = await supabaseClient.auth.refreshSession();
-            if (refreshError || !refreshData.session) {
-                showAuth();
-                return;
-            }
+    try {
+        if (!supabaseClient) {
+            console.error('Supabase client not available during init.');
+            showAuth();
+            return;
         }
-        currentSessionId = generateSessionId();
-        showAdmin();
-        startSessionCheck();
-    } else {
+
+        const { data: { session }, error } = await supabaseClient.auth.getSession();
+        if (error) throw error;
+
+        if (session) {
+            const token = session.access_token;
+            if (isTokenExpired(token)) {
+                const { data: refreshData, error: refreshError } = await supabaseClient.auth.refreshSession();
+                if (refreshError || !refreshData.session) {
+                    showAuth();
+                    return;
+                }
+            }
+            currentSessionId = generateSessionId();
+            showAdmin();
+            startSessionCheck();
+        } else {
+            showAuth();
+        }
+    } catch (err) {
+        console.error('Initialization error:', err);
         showAuth();
     }
 }
@@ -232,71 +245,59 @@ function startSessionCheck() {
 
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const rateCheck = isRateLimited();
-    if (rateCheck.limited) {
-        const minutes = Math.ceil(rateCheck.remainingSeconds / 60);
-        rateLimitWarning.textContent = `Hệ thống tạm khóa. Vui lòng thử lại sau ${minutes} phút.`;
-        rateLimitWarning.style.display = 'block';
-        loginError.textContent = '';
+    
+    if (!supabaseClient) {
+        loginError.textContent = 'Lỗi: Không thể kết nối với hệ thống xác thực (Supabase Library missing).';
         return;
     }
 
-    if (rateLimitState.inCooldown) return;
+    const loginSubmitBtn = document.getElementById('login-submit-btn');
+    const email = document.getElementById('email').value.toLowerCase().trim();
+    const password = document.getElementById('password').value.trim();
 
-    const emailRaw = document.getElementById('email').value;
-    const passwordRaw = document.getElementById('password').value;
-
-    const email = emailRaw.toLowerCase().trim();
     if (!validateEmail(email)) {
         loginError.textContent = 'Email không hợp lệ.';
         return;
     }
-    if (!validatePassword(passwordRaw)) {
-        loginError.textContent = 'Mật khẩu không hợp lệ.';
+    if (!validatePassword(password)) {
+        loginError.textContent = 'Mật khẩu phải từ 8 ký tự trở lên.';
         return;
     }
 
-    const submitBtn = document.getElementById('login-submit-btn');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Đang xác thực...';
+    loginSubmitBtn.disabled = true;
+    loginSubmitBtn.textContent = 'Đang kiểm tra...';
     loginError.textContent = '';
-    rateLimitWarning.style.display = 'none';
+    
+    try {
+        console.log('Attempting login for:', email);
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
-    rateLimitState.inCooldown = true;
-    const backoffDelay = computeBackoffDelay();
-
-    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-
-    await delay(backoffDelay);
-    rateLimitState.inCooldown = false;
-
-    if (error) {
-        recordFailedAttempt();
-        if (error.message === 'Invalid login credentials') {
-            loginError.textContent = 'Thông tin đăng nhập không chính xác.';
-        } else {
-            loginError.textContent = 'Lỗi xác thực.';
+        if (error) {
+            console.error('Supabase login error:', error.message, error.status);
+            if (error.message === 'Invalid login credentials') {
+                loginError.textContent = 'Tài khoản hoặc mật khẩu không đúng.';
+            } else if (error.message.includes('Email not confirmed')) {
+                loginError.textContent = 'Tài khoản chưa được xác nhận email. Vui lòng kiểm tra hộp thư.';
+            } else {
+                loginError.textContent = 'Lỗi: ' + error.message;
+            }
+            loginSubmitBtn.disabled = false;
+            loginSubmitBtn.textContent = 'Authorize';
+            return;
         }
-        logAuditEvent('login_failed', { email, reason: error.message });
-        const rateCheckAfter = isRateLimited();
-        if (rateCheckAfter.limited) {
-            const minutes = Math.ceil(rateCheckAfter.remainingSeconds / 60);
-            rateLimitWarning.textContent = `Cảnh báo bảo mật: Hệ thống tạm khóa ${minutes} phút do nhiều lần đăng nhập thất bại.`;
-            rateLimitWarning.style.display = 'block';
-        }
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Authorize';
-        return;
+
+        // Success flow
+        console.log('Login successful');
+        currentSessionId = generateSessionId();
+        showAdmin();
+        logAuditEvent('login_success', { email, session_id: currentSessionId });
+        startSessionCheck();
+    } catch (err) {
+        console.error('Fatal login error:', err);
+        loginError.textContent = 'Lỗi hệ thống: ' + err.message;
+        loginSubmitBtn.disabled = false;
+        loginSubmitBtn.textContent = 'Authorize';
     }
-
-    rateLimitState.attempts = 0;
-    rateLimitState.lockoutUntil = 0;
-    persistRateLimit();
-
-    currentSessionId = generateSessionId();
-    logAuditEvent('login_success', { email, session_id: currentSessionId });
-    showAdmin();
-    startSessionCheck();
 });
 
 logoutBtn.addEventListener('click', async () => {

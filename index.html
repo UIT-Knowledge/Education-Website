@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="vi">
     <head>
         <meta charset="UTF-8" />
@@ -914,6 +914,7 @@
             <div class="qr-modal-container" style="max-width: 600px;">
                 <div class="qr-modal-header">
                     <h3>Đăng ký mua Merch</h3>
+                    <p id="merch-display-name" style="font-weight: 600; color: var(--accent-strong); margin-top: 4px; font-size: 0.95rem;"></p>
                     <button id="close-merch-modal" class="qr-modal-close" aria-label="Đóng">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -926,11 +927,6 @@
                         <input type="hidden" id="merch-item-name" name="merch_name">
                         <input type="hidden" id="merch-item-price" name="merch_price">
                         <input type="hidden" id="merch-item-qr" name="merch_qr">
-
-                        <div class="form-group" style="margin-bottom: 20px; padding: 12px; background: rgba(62, 207, 142, 0.05); border-radius: 8px; border: 1px solid rgba(62, 207, 142, 0.1);">
-                            <p style="margin: 0; font-size: 0.9em; color: var(--dark-text-muted);">Sản phẩm đang chọn:</p>
-                            <p id="merch-display-name" style="margin: 4px 0 0; font-weight: 700; color: var(--accent-strong); font-size: 1.1em;">Tên sản phẩm</p>
-                        </div>
 
                         <div class="form-grid-2col">
                             <div class="form-group">
@@ -963,6 +959,9 @@
                             <button type="submit" class="btn btn-primary btn-full" id="submit-merch-btn">
                                 Tiếp tục thanh toán
                             </button>
+                            <p style="text-align: center; font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                                Thanh toán an toàn qua chuyển khoản ngân hàng
+                            </p>
                         </div>
                     </form>
                 </div>
