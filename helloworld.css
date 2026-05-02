@@ -9,8 +9,8 @@
     --primary: #3ecf8e;
     --primary-glow: rgba(62, 207, 142, 0.2);
     --text: #ffffff;
-    --text-dim: #c4c4c4;
-    --text-muted: #888888;
+    --text-dim: #dddddd;
+    --text-muted: #aaaaaa;
     --rad: 8px;
     --rad-sm: 6px;
     --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);

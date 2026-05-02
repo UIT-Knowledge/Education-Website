@@ -14,17 +14,17 @@
     --light-border: rgba(0, 0, 0, 0.08);
     --light-border-strong: rgba(0, 0, 0, 0.14);
     --light-text: #000000;
-    --light-text-secondary: rgba(0, 0, 0, 0.78);
-    --light-text-muted: rgba(0, 0, 0, 0.58);
+    --light-text-secondary: rgba(0, 0, 0, 0.87);
+    --light-text-muted: rgba(0, 0, 0, 0.68);
     --dark-canvas: #171717;
     --dark-surface: #0f0f0f;
     --dark-surface-soft: rgba(41, 41, 41, 0.84);
     --dark-border: #2e2e2e;
     --dark-border-strong: #363636;
     --dark-border-stronger: #393939;
-    --dark-text: #fafafa;
-    --dark-text-secondary: #cecece;
-    --dark-text-muted: #aaaaaa;
+    --dark-text: #ffffff;
+    --dark-text-secondary: #e0e0e0;
+    --dark-text-muted: #c0c0c0;
     --accent: #3b82f6;
     --accent-strong: #2563eb;
     --accent-border: rgba(59, 130, 246, 0.3);
@@ -170,7 +170,7 @@ select {
 
 .header:not(.scrolled) .logo-text,
 .header:not(.scrolled) .nav-link {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .header:not(.scrolled) .nav-link:hover,
@@ -180,7 +180,7 @@ select {
 }
 
 .header:not(.scrolled) .logo-meta {
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .header:not(.scrolled) .nav {
@@ -190,7 +190,7 @@ select {
 
 .header:not(.scrolled) .btn-secondary {
     border-color: rgba(255, 255, 255, 0.12);
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .header:not(.scrolled) .btn-secondary:hover {
@@ -213,11 +213,11 @@ select {
 
 /* Default scrolled nav children (over light → dark glass + white text) */
 .header.scrolled .logo-text {
-    color: rgba(255, 255, 255, 0.92);
+    color: #ffffff;
 }
 
 .header.scrolled .logo-meta {
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .header.scrolled .nav {
@@ -226,7 +226,7 @@ select {
 }
 
 .header.scrolled .nav-link {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.82);
 }
 
 .header.scrolled .nav-link:hover,
@@ -237,7 +237,7 @@ select {
 
 .header.scrolled .btn-secondary {
     border-color: rgba(255, 255, 255, 0.12);
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .header.scrolled .btn-secondary:hover {
@@ -269,11 +269,11 @@ select {
 }
 
 .header.scrolled.header-on-dark .logo-text {
-    color: rgba(0, 0, 0, 0.9);
+    color: #000000;
 }
 
 .header.scrolled.header-on-dark .logo-meta {
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.6);
 }
 
 .header.scrolled.header-on-dark .nav {
@@ -282,7 +282,7 @@ select {
 }
 
 .header.scrolled.header-on-dark .nav-link {
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(0, 0, 0, 0.82);
 }
 
 .header.scrolled.header-on-dark .nav-link:hover,
@@ -293,7 +293,7 @@ select {
 
 .header.scrolled.header-on-dark .btn-secondary {
     border-color: rgba(0, 0, 0, 0.1);
-    color: rgba(0, 0, 0, 0.8);
+    color: rgba(0, 0, 0, 0.9);
 }
 
 .header.scrolled.header-on-dark .btn-secondary:hover {
@@ -331,6 +331,7 @@ select {
     color: inherit;
     text-decoration: none;
     min-width: 0;
+    justify-self: start;
 }
 
 .logo-icon,
@@ -381,6 +382,7 @@ select {
     border: 1px solid rgba(0, 0, 0, 0.05);
     border-radius: var(--radius-pill);
     transition: background var(--transition), border-color var(--transition);
+    justify-self: center;
 }
 
 .nav-link {
@@ -403,6 +405,7 @@ select {
     display: flex;
     align-items: center;
     gap: 12px;
+    justify-self: end;
 }
 
 .menu-toggle {
@@ -634,8 +637,16 @@ select {
     margin: 0 auto 36px;
     font-size: 22px;
     line-height: 1.65;
-    color: rgba(255, 255, 255, 0.55);
-    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+    text-wrap: balance;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subtitle strong {
+    color: #ffffff;
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
 .hero-actions {
@@ -676,7 +687,7 @@ select {
 .btn-ghost {
     border-radius: var(--radius-pill);
     background: transparent;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.12);
     gap: 8px;
 }
@@ -765,7 +776,7 @@ select {
     font-weight: 500;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .hero-stat-divider {
@@ -818,7 +829,7 @@ select {
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.65);
     margin-bottom: 2px;
 }
 
@@ -834,7 +845,7 @@ select {
 .hero-subject-desc {
     font-size: 17px;
     line-height: 1.5;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.75);
     font-weight: 400;
 }
 
@@ -2000,7 +2011,7 @@ select {
 
 .footer-description {
     font-size: 15px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.65);
     line-height: 1.6;
     margin-bottom: 20px;
     max-width: 320px;
@@ -2046,7 +2057,7 @@ select {
 }
 
 .footer-links a {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.65);
     text-decoration: none;
     font-size: 17px;
     transition: color var(--transition);
@@ -2066,7 +2077,7 @@ select {
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.65);
     text-decoration: none;
     font-size: 16px;
     line-height: 1.5;
@@ -2075,7 +2086,7 @@ select {
 .contact-item svg {
     flex-shrink: 0;
     margin-top: 2px;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.55);
 }
 
 .contact-item:hover {
