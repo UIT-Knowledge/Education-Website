@@ -629,7 +629,7 @@ select {
 .btn-accent {
     border-radius: var(--radius-pill);
     background: var(--accent-strong);
-    color: #000000;
+    color: #ffffff;
     font-weight: 600;
     box-shadow: 0 0 24px rgba(59, 130, 246, 0.25);
     gap: 8px;
@@ -653,6 +653,36 @@ select {
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.2);
     color: #ffffff;
+}
+
+.btn-youtube {
+    border-radius: var(--radius-pill);
+    background: #FF0000;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+    gap: 8px;
+}
+
+.btn-youtube:hover {
+    transform: translateY(-2px);
+    background: #cc0000;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+}
+
+.btn-facebook {
+    border-radius: var(--radius-pill);
+    background: #1877F2;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 0 20px rgba(24, 119, 242, 0.2);
+    gap: 8px;
+}
+
+.btn-facebook:hover {
+    transform: translateY(-2px);
+    background: #1565c0;
+    box-shadow: 0 0 30px rgba(24, 119, 242, 0.3);
 }
 
 .hero-stats-bar {
