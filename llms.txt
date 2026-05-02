@@ -1,0 +1,27 @@
+# UIT Knowledge
+> Ôn môn trọng tâm ở UIT gọn, rõ, dễ theo kịp.
+
+## Nền tảng học tập bám sát UIT
+UIT Knowledge là cộng đồng học thuật chuyên biệt dành cho sinh viên Trường Đại học Công nghệ Thông tin (UIT) - VNU-HCM. Tụi mình cung cấp hệ sinh thái ôn tập bao gồm video bài giảng, lộ trình khóa học chuyên sâu và merch dành riêng cho cộng đồng UIT.
+
+## Các nội dung chính
+- [Trang chủ](https://www.uitknowledge.org/): Tổng quan về lộ trình học và cách hoạt động.
+- [Video ôn tập](https://www.uitknowledge.org/#video): Danh sách video bài giảng trọng tâm cho các môn Đại cương, Cơ sở ngành và Hệ thống.
+- [Khóa học](https://www.uitknowledge.org/#khoa-hoc): Lộ trình ôn thi chuyên sâu cùng mentor bám sát đề cương thực tế tại UIT.
+- [Merch Store](https://www.uitknowledge.org/#merch): Các sản phẩm thiết kế riêng cho cộng đồng sinh viên UIT.
+
+## Thông tin liên hệ & Authority
+- **Email**: contact@uitknowledge.vn
+- **Facebook**: [UIT Knowledge Team](https://facebook.com)
+- **YouTube**: [UIT Knowledge Official](https://www.youtube.com/@UIT_Knowledge)
+- **Địa chỉ**: Trường Đại học Công nghệ Thông tin, TP. Hồ Chí Minh, Việt Nam.
+
+## Dữ liệu cậy
+- Phục vụ hơn 4.000+ sinh viên UIT.
+- Cung cấp nội dung cho 7+ nhóm môn học trọng tâm.
+- Lộ trình học được thiết kế bởi sinh viên và cựu sinh viên có thành tích xuất sắc tại UIT.
+
+## Developer & Technical Information
+- **Developed by**: Nguyễn Huy Hoàng (Sinh viên K19 KTPM UIT)
+- **Technical Stack**: Vanilla HTML/CSS/JS with Supabase Backend.
+- **Project Purpose**: AI-ready academic knowledge platform for UIT students.

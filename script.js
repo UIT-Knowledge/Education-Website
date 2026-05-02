@@ -917,6 +917,43 @@ function renderCourses() {
 
     // Observe new reveal elements
     observeNewElements(coursesGrid);
+
+    // Inject Course Schema
+    const courseSchema = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                    "@type": "Course",
+                    "name": "Khóa học theo môn",
+                    "description": "Học trực tiếp cùng mentor bám sát đề cương UIT. Giải bài tập, ôn thi & hỗ trợ 24/7 suốt kỳ học.",
+                    "provider": {
+                        "@type": "Organization",
+                        "name": "UIT Knowledge",
+                        "url": "https://www.uitknowledge.org/"
+                    }
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                    "@type": "Course",
+                    "name": "Đăng ký xem Video",
+                    "description": "Kho video ôn tập trọng tâm bám sát UIT. Giải chi tiết đề thi các năm giúp nắm chắc kiến thức.",
+                    "provider": {
+                        "@type": "Organization",
+                        "name": "UIT Knowledge",
+                        "url": "https://www.uitknowledge.org/"
+                    }
+                }
+            }
+        ]
+    };
+    injectSchema('course-schema', courseSchema);
 }
 
 function injectSchema(id, schemaObj) {
@@ -977,6 +1014,29 @@ function renderMerch(merchList) {
     observeNewElements(merchGrid);
 
     initMerchCarousel();
+
+    // Inject Product Schema
+    const merchSchema = {
+        "@context": "https://schema.org",
+        "@graph": merchList.map(merch => ({
+            "@type": "Product",
+            "name": merch.name,
+            "description": merch.description || merch.name,
+            "image": merch.image_url,
+            "offers": {
+                "@type": "Offer",
+                "price": Number(String(merch.price).replace(/[^0-9]/g, '')),
+                "priceCurrency": "VND",
+                "availability": "https://schema.org/InStock",
+                "url": "https://www.uitknowledge.org/#merch"
+            },
+            "brand": {
+                "@type": "Brand",
+                "name": "UIT Knowledge"
+            }
+        }))
+    };
+    injectSchema('merch-schema', merchSchema);
 }
 
 function initYoutubeEmbeds() {
@@ -1028,36 +1088,51 @@ const faqSchema = {
             "name": "UIT Knowledge là gì?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "UIT Knowledge là cộng đồng học thuật chuyên tổng hợp video, khóa học và tài liệu dành riêng cho sinh viên UIT - VNU-HCM."
+                "text": "Một cộng đồng học thuật dành riêng cho sinh viên UIT, nơi tổng hợp video, khóa học và tài liệu để giúp bạn học đúng trọng tâm."
             }
         },
         {
             "@type": "Question",
-            "name": "Nội dung ở đây có bám sát chương trình UIT không?",
+            "name": "Nội dung có sát chương trình UIT không?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Có. Video và lộ trình khóa học được xây từ đề cương và nhu cầu ôn tập thực tế của sinh viên UIT."
+                "text": "Có. Tụi mình xây dựng dựa trên chính môn học ở UIT, không phải content chung chung."
             }
         },
         {
             "@type": "Question",
-            "name": "Tôi nên bắt đầu từ đâu nếu bị mất gốc?",
+            "name": "Mất gốc thì bắt đầu từ đâu?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Hãy xem video ôn tập nền tảng trước để nắm lại ý chính, rồi chọn khóa học theo môn đang yếu nhất."
+                "text": "Bắt đầu từ video. Đừng cố hiểu hết ngay, chỉ cần hiểu lại những ý chính trước."
             }
         },
         {
             "@type": "Question",
-            "name": "Khóa học tại UIT Knowledge diễn ra như thế nào?",
+            "name": "Khóa học diễn ra như thế nào?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Khóa học thường học online có hướng dẫn, qua video và bài tập thực hành, mở theo từng đợt để hỗ trợ tốt hơn."
+                "text": "Ngắn gọn, đi thẳng vào trọng tâm, có lộ trình rõ ràng để bạn không bị lạc."
             }
         }
     ]
 };
 injectSchema('faq-schema', faqSchema);
+
+// Inject WebSite Schema with Searchbox
+const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.uitknowledge.org/",
+    "name": "UIT Knowledge",
+    "description": "Ôn môn trọng tâm ở UIT gọn, rõ, dễ theo kịp",
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.uitknowledge.org/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    }
+};
+injectSchema('website-schema', websiteSchema);
 
 // Register Service Worker
 if ('serviceWorker' in navigator) {
