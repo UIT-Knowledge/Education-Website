@@ -2043,7 +2043,7 @@ select {
     background: #0d1117;
     color: var(--dark-text);
     overflow: hidden;
-    padding: 60px 0 40px;
+    padding: 40px 0 24px;
 }
 
 .footer-shell {
@@ -2055,7 +2055,7 @@ select {
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr;
     gap: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .footer-col {
@@ -2068,7 +2068,7 @@ select {
     font-size: 22px;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
 }
 
 .footer-logo .logo-accent {
@@ -2079,7 +2079,7 @@ select {
     font-size: 15px;
     color: rgba(255, 255, 255, 0.65);
     line-height: 1.6;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     max-width: 320px;
 }
 
@@ -2112,14 +2112,14 @@ select {
     font-size: 20px;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .footer-links {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
 }
 
 .footer-links a {
