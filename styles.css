@@ -1828,7 +1828,8 @@ select {
 
 .course-link,
 .video-link,
-.merch-btn {
+.merch-btn,
+.size-chart-btn {
     gap: 10px;
     font-size: 23px !important; /* Increased by 3px */
     font-weight: 700 !important;
@@ -1838,6 +1839,11 @@ select {
     border-radius: var(--radius-pill) !important;
     padding: 0 28px !important;
     min-height: 50px !important;
+}
+
+.merch-footer .size-chart-btn,
+.merch-footer .merch-btn {
+    flex: 1;
 }
 
 .course-link,
