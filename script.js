@@ -280,7 +280,7 @@ function initMerchCarousel() {
 
     let index = 1;
     let isAnimating = false;
-    const autoRotateDelay = 3500;
+    const autoRotateDelay = 10000; // 10 seconds
 
     const setPosition = (withTransition = true) => {
         track.classList.toggle('no-transition', !withTransition);
@@ -304,7 +304,13 @@ function initMerchCarousel() {
     const startAutoRotate = () => {
         if (carousel._autoRotateInterval) clearInterval(carousel._autoRotateInterval);
         carousel._autoRotateInterval = setInterval(() => {
-            move(1);
+            // Check if merch form or size chart form is open
+            const isMerchFormOpen = document.getElementById('merch-modal')?.classList.contains('active');
+            const isSizeChartOpen = document.getElementById('size-chart-modal')?.classList.contains('active');
+            
+            if (!isMerchFormOpen && !isSizeChartOpen) {
+                move(1);
+            }
         }, autoRotateDelay);
     };
 
@@ -647,6 +653,9 @@ document.addEventListener('click', (e) => {
         const qrUrl = merchBtn.dataset.qr;
         const price = merchBtn.dataset.price;
         openMerchModal(title, qrUrl, price);
+    } else if (e.target.closest('.size-chart-btn')) {
+        const name = e.target.closest('.size-chart-btn').dataset.name;
+        openSizeChartModal(name);
     }
 });
 
@@ -737,6 +746,32 @@ document.getElementById('merch-form')?.addEventListener('submit', async (e) => {
     }
 });
 
+// Size Chart Modal Functions
+function openSizeChartModal(name) {
+    const modal = document.getElementById('size-chart-modal');
+    if (modal) {
+        const productNameEl = modal.querySelector('.product-name');
+        if (productNameEl && name) productNameEl.textContent = name;
+        
+        modal.style.display = 'flex';
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeSizeChartModal() {
+    const modal = document.getElementById('size-chart-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+}
+
+document.getElementById('close-size-chart-modal')?.addEventListener('click', closeSizeChartModal);
+document.getElementById('size-chart-modal')?.querySelector('.qr-modal-overlay')?.addEventListener('click', closeSizeChartModal);
 
 updateActiveNav();
 
@@ -960,14 +995,18 @@ function renderMerch(merchList) {
         }
             </div>
             <div class="merch-info">
-                <h3 class="merch-name">${escapeHTML(merch.name)}</h3>
+                <h3 class="merch-name" data-name="${escapeHTML(merch.name)}">${escapeHTML(merch.name)}</h3>
                 <p class="merch-desc">${escapeHTML(merch.description || '')}</p>
                 <div class="merch-footer">
                     <span class="merch-price">${escapeHTML(formatVND(merch.price))}</span>
-                    <button class="btn btn-primary btn-merch merch-btn" 
-                            data-name="${escapeHTML(merch.name)}" 
-                            data-qr="${escapeHTML(merch.payment_qr_url || '')}"
-                            data-price="${escapeHTML(merch.price || '')}">Mua ngay</button>
+                    <div style="display: flex; gap: 10px;">
+                        ${merch.name.toLowerCase().includes('áo thun') ? 
+                            `<button class="btn btn-primary btn-merch size-chart-btn" data-name="${escapeHTML(merch.name)}">Bảng size</button>` : ''}
+                        <button class="btn btn-primary btn-merch merch-btn" 
+                                data-name="${escapeHTML(merch.name)}" 
+                                data-qr="${escapeHTML(merch.payment_qr_url || '')}"
+                                data-price="${escapeHTML(merch.price || '')}">Mua ngay</button>
+                    </div>
                 </div>
             </div>
         </article>

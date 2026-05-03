@@ -455,10 +455,14 @@ select {
 }
 
 .btn-merch {
-    min-height: 40px;
-    padding: 0 20px;
-    font-size: 17px;
-    font-weight: 600;
+    min-height: 48px;
+    padding: 0 24px;
+    font-size: 19px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .btn-primary {
@@ -1479,7 +1483,14 @@ select {
     font-size: 29px;
     line-height: 1.14;
     letter-spacing: -0.04em;
+    color: #ffffff;
+}
+
+.merch-name[data-name="Móc khoá UIT"] {
     color: var(--cyan);
+    background: linear-gradient(135deg, #ffffff 0%, var(--cyan) 50%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
 }
 
@@ -1806,10 +1817,7 @@ select {
     line-height: 1;
     letter-spacing: -0.04em;
     font-weight: 800;
-    background: linear-gradient(135deg, var(--cyan) 0%, #ffffff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.5)); /* Enhanced Cyan glow */
+    color: #ffffff;
 }
 
 .course-card:hover .course-price {
@@ -1998,16 +2006,20 @@ select {
 }
 
 .merch-name {
-    color: var(--cyan);
-    background: linear-gradient(135deg, #ffffff 0%, var(--cyan) 50%, #ffffff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #ffffff;
     font-size: clamp(35px, 5vw, 53px); /* Increased by 3px */
     max-width: 14ch;
     margin-bottom: 14px;
     font-weight: 800;
     letter-spacing: -0.02em;
-    text-shadow: 0 0 30px rgba(0, 255, 255, 0.4); /* Cyan glow */
+}
+
+.merch-name[data-name="Móc khoá UIT"] {
+    color: var(--cyan);
+    background: linear-gradient(135deg, #ffffff 0%, var(--cyan) 50%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
 }
 
 .merch-info {
@@ -3884,5 +3896,95 @@ select {
 
 .merch-modal-premium.active {
     animation: premium-slide-up 0.5s var(--ease-premium) forwards;
+}
+
+/* === SIZE CHART PREMIUM === */
+#size-chart-modal .merch-modal-premium {
+    max-width: 960px !important; /* Increased from 800px (+20%) */
+}
+
+.size-chart-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    background: var(--light-surface);
+    padding: 8px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--light-border);
+}
+
+.size-tab {
+    flex: 1;
+    padding: 12px 20px;
+    border-radius: var(--radius-pill);
+    border: none;
+    background: transparent;
+    font-weight: 700;
+    font-size: 18px; /* Increased from 14px (~30%) */
+    cursor: pointer;
+    transition: all 0.3s var(--ease-premium);
+    color: var(--light-text-secondary);
+}
+
+.size-tab.active {
+    background: #fff;
+    color: var(--accent-strong);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.size-chart-content {
+    display: none;
+    animation: modal-fade-in 0.4s ease-out;
+}
+
+.size-chart-content.active {
+    display: block;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--light-border);
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.size-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 19px; /* Increased from 15px (~30%) */
+}
+
+.size-table th {
+    background: rgba(59, 130, 246, 0.04);
+    padding: 20px; /* Increased padding */
+    text-align: left;
+    font-weight: 800;
+    color: var(--light-text);
+    border-bottom: 2px solid var(--light-border);
+    white-space: nowrap;
+}
+
+.size-table td {
+    padding: 18px 20px; /* Increased padding */
+    border-bottom: 1px solid var(--light-border-soft);
+    color: var(--light-text-secondary);
+}
+
+.size-table tr:last-child td {
+    border-bottom: none;
+}
+
+.size-table tr:hover td {
+    background: rgba(59, 130, 246, 0.02);
+}
+
+@media (max-width: 600px) {
+    .size-table {
+        font-size: 14px;
+    }
+    .size-table th, .size-table td {
+        padding: 12px 10px;
+    }
 }
 

@@ -1003,6 +1003,73 @@
             </div>
         </div>
 
+        <!-- Size Chart Modal -->
+        <div id="size-chart-modal" class="qr-modal" aria-hidden="true">
+            <div class="qr-modal-overlay"></div>
+            <div class="qr-modal-container merch-modal-premium">
+                <div class="qr-modal-header">
+                    <div class="header-content">
+                        <h3>Bảng size sản phẩm</h3>
+                        <span class="header-subtitle-modal">Thông số chuẩn UIT Knowledge</span>
+                    </div>
+                    <button id="close-size-chart-modal" class="qr-modal-close" aria-label="Đóng">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="qr-modal-body" style="text-align: left; overflow-y: auto; max-height: 75vh; padding: 24px;">
+                    <!-- Product Highlight -->
+                    <div class="merch-product-highlight" style="margin-bottom: 24px;">
+                        <div class="product-highlight-content">
+                            <div class="product-icon-box">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.62 1.96V10a4 4 0 004 4h12a4 4 0 004-4V5.42a2 2 0 00-1.62-1.96z"></path>
+                                    <path d="M8 14v7a1 1 0 001 1h6a1 1 0 001-1v-7"></path>
+                                </svg>
+                            </div>
+                            <div class="product-details">
+                                <span class="product-label">Sản phẩm hiện tại</span>
+                                <h4 class="product-name">Áo Thun UIT Knowledge</h4>
+                            </div>
+                        </div>
+                        <div class="product-highlight-accent"></div>
+                    </div>
+
+                    <div id="adult-size-chart" class="size-chart-content active">
+                        <div class="table-responsive">
+                            <table class="size-table">
+                                <thead>
+                                    <tr>
+                                        <th>Size</th>
+                                        <th>Dài (cm)</th>
+                                        <th>Rộng (cm)</th>
+                                        <th>Tay (cm)</th>
+                                        <th>Chiều cao</th>
+                                        <th>Cân nặng (kg)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>S</td><td>58</td><td>42</td><td>14</td><td>Dưới 150cm</td><td>31-35</td></tr>
+                                    <tr><td>M</td><td>61</td><td>44</td><td>15</td><td>146-158cm</td><td>36-42</td></tr>
+                                    <tr><td>L</td><td>65</td><td>46</td><td>17</td><td>155-165cm</td><td>43-50</td></tr>
+                                    <tr><td>XL</td><td>67</td><td>48</td><td>18</td><td>163-171cm</td><td>51-55</td></tr>
+                                    <tr><td>2XL</td><td>70</td><td>51</td><td>19</td><td>164-175cm</td><td>56-65</td></tr>
+                                    <tr><td>3XL</td><td>74</td><td>54</td><td>21</td><td>Trên 165cm</td><td>66-80</td></tr>
+                                    <tr><td>4XL</td><td>78</td><td>57</td><td>25</td><td>Trên 165cm</td><td>81-90</td></tr>
+                                    <tr><td>5XL</td><td>81</td><td>60</td><td>27</td><td>Trên 165cm</td><td>91-105</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 16px; font-size: 14px; color: var(--light-text-muted); font-style: italic;">
+                        * Lưu ý: Kích thước áo thực tế có thể sai số ±1-2cm do may đo thủ công.
+                    </p>
+                </div>
+            </div>
+        </div>
 
         <script
             async
