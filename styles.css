@@ -1469,11 +1469,18 @@ select {
 }
 
 .video-title,
-.course-title,
+.course-title {
+    font-size: 29px;
+    line-height: 1.14;
+    letter-spacing: -0.04em;
+}
+
 .merch-name {
     font-size: 29px;
     line-height: 1.14;
     letter-spacing: -0.04em;
+    color: var(--cyan);
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
 }
 
 .course-title {
@@ -1799,10 +1806,10 @@ select {
     line-height: 1;
     letter-spacing: -0.04em;
     font-weight: 800;
-    background: linear-gradient(135deg, var(--accent) 0%, #ffffff 100%);
+    background: linear-gradient(135deg, var(--cyan) 0%, #ffffff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 8px rgba(62, 207, 142, 0.4)); /* Price glow */
+    filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.5)); /* Enhanced Cyan glow */
 }
 
 .course-card:hover .course-price {
@@ -1991,8 +1998,8 @@ select {
 }
 
 .merch-name {
-    color: #ffffff;
-    background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #ffffff 100%);
+    color: var(--cyan);
+    background: linear-gradient(135deg, #ffffff 0%, var(--cyan) 50%, #ffffff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: clamp(35px, 5vw, 53px); /* Increased by 3px */
@@ -2000,7 +2007,7 @@ select {
     margin-bottom: 14px;
     font-weight: 800;
     letter-spacing: -0.02em;
-    text-shadow: 0 0 30px rgba(59, 130, 246, 0.3); /* Subtle glow */
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.4); /* Cyan glow */
 }
 
 .merch-info {
