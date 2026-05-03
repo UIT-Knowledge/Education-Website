@@ -31,6 +31,8 @@
     --cyan: #00ffff;
     --cyan-border: rgba(0, 255, 255, 0.4);
     --cyan-glow: rgba(0, 255, 255, 0.25);
+    --uit-blue: #2F6BFF;
+    --uit-blue-glow: rgba(47, 107, 255, 0.4);
     --pastel-pink: #ef2cc1;
     --pastel-orange: #fc4c02;
     --pastel-lavender: #bdbbff;
@@ -1487,11 +1489,11 @@ select {
 }
 
 .merch-name[data-name="Móc khoá UIT"] {
-    color: var(--cyan);
-    background: linear-gradient(135deg, #ffffff 0%, var(--cyan) 50%, #ffffff 100%);
+    color: var(--uit-blue);
+    background: linear-gradient(135deg, #ffffff 0%, var(--uit-blue) 50%, #ffffff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    text-shadow: 0 0 15px var(--uit-blue-glow);
 }
 
 .course-title {
@@ -2015,11 +2017,11 @@ select {
 }
 
 .merch-name[data-name="Móc khoá UIT"] {
-    color: var(--cyan);
-    background: linear-gradient(135deg, #ffffff 0%, var(--cyan) 50%, #ffffff 100%);
+    color: var(--uit-blue);
+    background: linear-gradient(135deg, #ffffff 0%, var(--uit-blue) 50%, #ffffff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+    text-shadow: 0 0 30px var(--uit-blue-glow);
 }
 
 .merch-info {
