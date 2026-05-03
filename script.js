@@ -867,7 +867,7 @@ function renderCourses() {
         <article class="course-card reveal">
             <div class="course-image glass-effect">
                 <div class="course-badge badge-online">Online</div>
-                <img src="assets/images/image.png" alt="Khóa học theo môn">
+                <img src="assets/images/image.png" alt="Khóa học theo môn" loading="lazy">
             </div>
             <div class="course-content">
                 <div class="course-meta">
@@ -892,7 +892,7 @@ function renderCourses() {
         <article class="course-card reveal">
             <div class="course-image glass-effect-alt">
                 <div class="course-badge badge-hot">Dành cho bạn</div>
-                <img src="assets/images/eb80805b-31b8-4f2c-a9da-b3d0b59bdbb1.jpg" alt="Video ôn tập">
+                <img src="assets/images/eb80805b-31b8-4f2c-a9da-b3d0b59bdbb1.jpg" alt="Video ôn tập" loading="lazy">
             </div>
             <div class="course-content">
                 <div class="course-meta">
@@ -955,7 +955,7 @@ function renderMerch(merchList) {
         <article class="merch-card reveal">
             <div class="merch-image">
                 ${merch.image_url ?
-            `<img src="${escapeHTML(merch.image_url)}" alt="${escapeHTML(merch.name)}" style="width: 100%; height: 100%; object-fit: contain; padding: 16px;">` :
+            `<img src="${escapeHTML(merch.image_url)}" alt="${escapeHTML(merch.name)}" style="width: 100%; height: 100%; object-fit: contain; padding: 16px;" loading="lazy">` :
             `<div class="merch-placeholder ${escapeHTML(merch.placeholder_class || 'merch-shirt')}"><span>${escapeHTML(merch.name)}</span></div>`
         }
             </div>
