@@ -871,10 +871,92 @@
             </div>
         </div>
         
+        <!-- Tutor Registration Modal -->
+        <div id="tutor-modal" class="qr-modal" aria-hidden="true">
+            <div class="qr-modal-overlay"></div>
+            <div class="qr-modal-container" style="max-width: 920px;"> <!-- Increased for better column alignment -->
+                <div class="qr-modal-header">
+                    <h3>Đăng ký Dạy kèm 1-1</h3>
+                    <button id="close-tutor-modal" class="qr-modal-close" aria-label="Đóng">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="qr-modal-body" style="text-align: left;">
+                    <form id="tutor-form" class="registration-form">
+                        <div class="form-grid-2col">
+                            <div class="form-group">
+                                <label for="tutor-full-name">Họ và tên của bạn <span class="required">*</span></label>
+                                <input type="text" id="tutor-full-name" name="full_name" placeholder="Nguyễn Văn A" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tutor-school">Trường đang theo học <span class="required">*</span></label>
+                                <input type="text" id="tutor-school" name="school" placeholder="Trường Đại học Công nghệ Thông tin" required>
+                            </div>
+                        </div>
+
+                        <div class="form-grid-2col">
+                            <div class="form-group">
+                                <label for="tutor-level">Cấp bậc học tập <span class="required">*</span></label>
+                                <select id="tutor-level" name="education_level" required>
+                                    <option value="" disabled selected>Chọn cấp bậc</option>
+                                    <option value="THPT">THPT</option>
+                                    <option value="Đại học">Đại học</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tutor-subject">Môn học muốn kèm <span class="required">*</span></label>
+                                <select id="tutor-subject" name="subject" required>
+                                    <option value="" disabled selected>Chọn môn học</option>
+                                    <option value="Toán cấp 3">Toán cấp 3</option>
+                                    <option value="Tin học cấp 3">Tin học cấp 3</option>
+                                    <option value="Nhập môn lập trình">Nhập môn lập trình</option>
+                                    <option value="Cấu trúc dữ liệu và giải thuật">Cấu trúc dữ liệu và giải thuật</option>
+                                    <option value="Lập trình hướng đối tượng">Lập trình hướng đối tượng</option>
+                                    <option value="Các môn đại cương toán đại học">Các môn đại cương toán đại học</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-grid-2col">
+                            <div class="form-group">
+                                <label for="tutor-email">Email liên hệ <span class="required">*</span></label>
+                                <input type="email" id="tutor-email" name="email" placeholder="email@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tutor-phone">Số điện thoại <span class="required">*</span></label>
+                                <input type="tel" id="tutor-phone" name="phone" placeholder="0xxxxxxxxx" required>
+                            </div>
+                        </div>
+
+                        <div class="form-grid-2col">
+                            <div class="form-group">
+                                <label for="tutor-facebook">Link Facebook (nếu có)</label>
+                                <input type="url" id="tutor-facebook" name="facebook" placeholder="https://facebook.com/username">
+                            </div>
+                            <div class="form-group">
+                                <label for="tutor-zalo">Số Zalo (nếu có)</label>
+                                <input type="text" id="tutor-zalo" name="zalo" placeholder="0xxxxxxxxx">
+                            </div>
+                        </div>
+
+                        <div class="registration-footer">
+                            <button type="submit" class="btn btn-primary btn-full" id="submit-tutor-btn">
+                                Gửi thông tin đăng ký
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- Video Registration Modal -->
+
         <div id="video-modal" class="qr-modal" aria-hidden="true">
             <div class="qr-modal-overlay"></div>
-            <div class="qr-modal-container" style="max-width: 600px;">
+            <div class="qr-modal-container" style="max-width: 920px;"> <!-- Increased for better column alignment -->
                 <div class="qr-modal-header">
                     <h3>Đăng ký xem Video</h3>
                     <button id="close-video-modal" class="qr-modal-close" aria-label="Đóng">

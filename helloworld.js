@@ -361,12 +361,12 @@ function renderItems(items) {
 
     contentArea.innerHTML = items.map(item => {
         const title = item.key || item.full_name || item.title || item.name;
-        const subtext = item.value || item.student_id || item.student_id_email || item.video_id || item.price || item.id.substring(0, 8);
-        const meta = item.updated_at ? `Cập nhật: ${new Date(item.updated_at).toLocaleDateString('vi-VN')}` : (item.courses ? item.courses.join(', ') : (item.image_url ? 'IMAGE_SYNCED' : escapeHTML(item.placeholder_class || 'UIT_KNOWLEDGE_CORE')));
+        const subtext = item.value || item.student_id || item.student_id_email || item.phone || item.video_id || item.price || item.id.substring(0, 8);
+        const meta = item.updated_at ? `Cập nhật: ${new Date(item.updated_at).toLocaleDateString('vi-VN')}` : (item.courses ? item.courses.join(', ') : (item.subject ? item.subject : (item.image_url ? 'IMAGE_SYNCED' : escapeHTML(item.placeholder_class || 'UIT_KNOWLEDGE_CORE'))));
 
         const isReg = currentTab.includes('registrations');
         const isSetting = currentTab === 'settings';
-        const regBadge = isReg ? `<span class="registration-badge">${currentTab === 'course_registrations' ? 'MENTOR' : 'VIDEO'}</span>` : (isSetting ? '<span class="registration-badge" style="background: rgba(255, 255, 255, 0.1); border-color: var(--border);">CONFIG</span>' : '');
+        const regBadge = isReg ? `<span class="registration-badge">${currentTab === 'course_registrations' ? 'MENTOR' : (currentTab === 'video_registrations' ? 'VIDEO' : 'TUTOR')}</span>` : (isSetting ? '<span class="registration-badge" style="background: rgba(255, 255, 255, 0.1); border-color: var(--border);">CONFIG</span>' : '');
 
         const editId = escapeHTML(item.id || item.key);
 
@@ -654,6 +654,50 @@ function renderFields(data = {}) {
                 <input type="text" name="value" value="${safe(data.value)}" required placeholder="Ví dụ: https://facebook.com/GenCanyon" maxlength="1000">
             </div>
             <p style="font-size: 11px; color: var(--text-muted); margin-top: 10px;">Lưu ý: Bạn chỉ có thể sửa giá trị, mã thiết lập là cố định.</p>`;
+    } else if (currentTab === 'tutor_registrations') {
+        fields = `
+            <div class="modal-grid-2col">
+                <div class="form-group">
+                    <label>Họ và tên</label>
+                    <input type="text" value="${safe(data.full_name)}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Trường học</label>
+                    <input type="text" value="${safe(data.school)}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Cấp bậc</label>
+                    <input type="text" value="${safe(data.education_level)}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Môn học</label>
+                    <input type="text" value="${safe(data.subject)}" readonly style="color: var(--primary); font-weight: 600;">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" value="${safe(data.email)}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <input type="text" value="${safe(data.phone)}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Facebook</label>
+                    <input type="text" value="${safe(data.facebook)}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Zalo</label>
+                    <input type="text" value="${safe(data.zalo)}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <input type="text" value="${safe(data.status)}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Thời gian gửi</label>
+                    <input type="text" value="${data.created_at ? new Date(data.created_at).toLocaleString('vi-VN') : ''}" readonly>
+                </div>
+            </div>`;
     }
 
     dynamicFields.innerHTML = fields;
@@ -672,7 +716,8 @@ itemForm.addEventListener('submit', async (e) => {
         'merch': ['name', 'description', 'price', 'placeholder_class', 'payment_qr_url'],
         'settings': ['value'],
         'course_registrations': [],
-        'video_registrations': []
+        'video_registrations': [],
+        'tutor_registrations': []
     };
 
     const formData = new FormData(itemForm);

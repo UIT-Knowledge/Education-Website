@@ -3181,7 +3181,7 @@ select {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 520px;
+    max-width: 728px; /* Increased from 520px (~40%) */
     background: var(--light-canvas);
     border-radius: var(--radius-lg);
     box-shadow: 0 32px 64px rgba(0, 0, 0, 0.25);
@@ -3193,7 +3193,7 @@ select {
 }
 
 .qr-modal-header {
-    padding: 20px 24px;
+    padding: 28px 34px; /* Increased from 20px 24px */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -3201,7 +3201,7 @@ select {
 }
 
 .qr-modal-header h3 {
-    font-size: 22px;
+    font-size: 30px; /* Increased from 22px */
     font-weight: 700;
     letter-spacing: -0.02em;
 }
@@ -3222,7 +3222,7 @@ select {
 }
 
 .qr-modal-body {
-    padding: 24px;
+    padding: 34px; /* Increased from 24px */
     text-align: center;
 }
 
@@ -3260,23 +3260,23 @@ select {
 .registration-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 28px; /* Increased from 20px */
 }
 
 .form-grid-2col {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 24px; /* Increased from 16px */
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px; /* Increased from 8px */
 }
 
 .form-group label {
-    font-size: 16px;
+    font-size: 19px; /* Increased from 16px */
     font-weight: 600;
     color: var(--light-text);
 }
@@ -3287,15 +3287,19 @@ select {
 
 .form-group input[type="text"],
 .form-group input[type="tel"],
+.form-group input[type="email"],
+.form-group input[type="url"],
 .form-group input[type="number"],
 .form-group select,
 .form-group textarea {
-    padding: 12px 16px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 22px; /* Increased from 12px 16px */
     border: 1px solid var(--light-border);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md); /* Increased from sm */
     background: #fff;
     font-family: inherit;
-    font-size: 17px;
+    font-size: 20px; /* Increased from 17px */
     transition: border-color var(--transition), box-shadow var(--transition);
 }
 
@@ -3341,9 +3345,15 @@ select {
 }
 
 .registration-footer {
-    margin-top: 12px;
-    padding-top: 24px;
+    margin-top: 20px; /* Increased from 12px */
+    padding-top: 34px; /* Increased from 24px */
     border-top: 1px solid var(--light-border);
+}
+
+.registration-footer .btn {
+    min-height: 64px; /* Increased for better scale */
+    font-size: 22px; /* Increased from 17px */
+    font-weight: 700;
 }
 
 @media (max-width: 640px) {

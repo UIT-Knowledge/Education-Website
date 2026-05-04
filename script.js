@@ -635,11 +635,73 @@ document.getElementById('video-form')?.addEventListener('submit', async (e) => {
     }
 });
 
+// Tutor Registration Modal Functions
+function openTutorModal() {
+    const modal = document.getElementById('tutor-modal');
+    const form = document.getElementById('tutor-form');
+    if (!modal || !form) return;
+    form.reset();
+    modal.style.display = 'flex';
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeTutorModal() {
+    const modal = document.getElementById('tutor-modal');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+}
+
+document.getElementById('close-tutor-modal')?.addEventListener('click', closeTutorModal);
+document.getElementById('tutor-modal')?.querySelector('.qr-modal-overlay')?.addEventListener('click', closeTutorModal);
+
+document.getElementById('tutor-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submitBtn = document.getElementById('submit-tutor-btn');
+    if (!submitBtn) return;
+
+    const formData = new FormData(e.target);
+    const data = {
+        full_name: formData.get('full_name'),
+        school: formData.get('school'),
+        education_level: formData.get('education_level'),
+        subject: formData.get('subject'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        facebook: formData.get('facebook'),
+        zalo: formData.get('zalo'),
+        status: 'pending'
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Đang gửi...';
+
+    try {
+        const { error } = await supabaseClient.from('tutor_registrations').insert([data]);
+        if (error) throw error;
+        
+        alert('Cảm ơn bạn đã đăng ký! Chúng mình sẽ sớm liên hệ để tư vấn và báo giá chi tiết.');
+        closeTutorModal();
+    } catch (err) {
+        alert('Có lỗi xảy ra: ' + err.message);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Gửi thông tin đăng ký';
+    }
+});
+
+
 // Delegate course and merch link clicks
 document.addEventListener('click', (e) => {
     const courseLink = e.target.closest('.course-link');
     const videoLink = e.target.closest('.video-link');
     const merchBtn = e.target.closest('.merch-btn');
+    const tutorLink = e.target.closest('.tutor-link');
 
     if (courseLink) {
         e.preventDefault();
@@ -648,6 +710,9 @@ document.addEventListener('click', (e) => {
     } else if (videoLink) {
         e.preventDefault();
         openVideoModal();
+    } else if (tutorLink) {
+        e.preventDefault();
+        openTutorModal();
     } else if (merchBtn) {
         const title = merchBtn.dataset.name;
         const qrUrl = merchBtn.dataset.qr;
@@ -948,9 +1013,44 @@ function renderCourses() {
                 </div>
             </div>
         </article>
-    `;
 
-    // Observe new reveal elements
+        <!-- Special Section Header -->
+        <div class="section-header reveal-mask reveal" style="grid-column: 1 / -1; margin-top: 60px; margin-bottom: -20px;">
+            <span class="section-tag section-tag-light">Dạy kèm 1-1</span>
+            <h2 class="section-title section-title-dark" style="margin-bottom: 12px;">
+                Lộ trình riêng cho bạn
+            </h2>
+            <p class="section-desc section-desc-dark" style="max-width: 600px; margin: 0 auto;">
+                Học trực tiếp 1-1 cùng Mentor để tối ưu hóa thời gian và bứt phá kết quả học tập.
+            </p>
+        </div>
+
+        <!-- Centered Special Card -->
+        <article class="course-card reveal" style="grid-column: 1 / -1; justify-self: center; width: 100%; max-width: 600px;">
+            <div class="course-image glass-effect-alt" style="background: linear-gradient(135deg, rgba(62, 207, 142, 0.1) 0%, rgba(62, 207, 142, 0.05) 100%);">
+                <div class="course-badge badge-hot">Hot</div>
+                <img src="assets/images/image2.png" alt="Dạy kèm 1-1" loading="lazy">
+            </div>
+            <div class="course-content">
+                <div class="course-meta">
+                    <span>Cá nhân hóa</span>
+                    <span>Lộ trình riêng</span>
+                </div>
+                <h3 class="course-title">Dạy kèm 1-1</h3>
+                <ul class="course-features">
+                    <li>Học 1-1 trực tiếp cùng Mentor giỏi, tận tâm.</li>
+                    <li>Lộ trình thiết kế riêng theo trình độ và mục tiêu cá nhân.</li>
+                </ul>
+                <div class="course-footer">
+                    <span class="course-price">Liên hệ báo giá</span>
+                    <a href="#" class="tutor-link btn btn-primary btn-small">
+                        <span>Đăng ký ngay</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    `;
     observeNewElements(coursesGrid);
 }
 
