@@ -1042,7 +1042,7 @@ function renderCourses() {
                     <li>Lộ trình thiết kế riêng theo trình độ và mục tiêu cá nhân.</li>
                 </ul>
                 <div class="course-footer">
-                    <span class="course-price">Liên hệ báo giá</span>
+                    <span class="course-price">Trả phí</span>
                     <a href="#" class="tutor-link btn btn-primary btn-small">
                         <span>Đăng ký ngay</span>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"></path></svg>

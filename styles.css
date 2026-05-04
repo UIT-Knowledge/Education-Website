@@ -1828,6 +1828,7 @@ select {
 
 .course-link,
 .video-link,
+.tutor-link,
 .merch-btn,
 .size-chart-btn {
     gap: 10px;
@@ -1847,7 +1848,8 @@ select {
 }
 
 .course-link,
-.video-link {
+.video-link,
+.tutor-link {
     background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%) !important;
     color: #fff !important;
     border: none !important;
@@ -1855,7 +1857,8 @@ select {
 }
 
 .course-link::after,
-.video-link::after {
+.video-link::after,
+.tutor-link::after {
     content: '';
     position: absolute;
     top: -50%;
