@@ -76,11 +76,14 @@ navLinks.forEach(link => {
     link.addEventListener('click', () => {
         menuToggle.classList.remove('active');
         nav.classList.remove('open');
+        // Set active immediately — don't wait for scroll handler
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
     });
 });
 
 function updateActiveNav() {
-    const triggerLine = header.getBoundingClientRect().bottom + 1;
+    const headerBottom = header.getBoundingClientRect().bottom;
 
     const triggerMap = [
         { navId: 'gioi-thieu', el: document.getElementById('gioi-thieu') },
@@ -90,12 +93,14 @@ function updateActiveNav() {
         { navId: 'lien-he', el: findSectionTagByText('Giải đáp thắc mắc') },
     ].filter(entry => entry.el);
 
+    // Activate the section closest to the header bottom
     let activeId = 'gioi-thieu';
+    let minDist = Infinity;
     for (const entry of triggerMap) {
-        if (entry.el.getBoundingClientRect().top <= triggerLine) {
+        const dist = Math.abs(entry.el.getBoundingClientRect().top - headerBottom);
+        if (dist < minDist) {
+            minDist = dist;
             activeId = entry.navId;
-        } else {
-            break;
         }
     }
 
