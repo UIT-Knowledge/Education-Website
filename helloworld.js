@@ -366,7 +366,7 @@ function renderItems(items) {
 
         const isReg = currentTab.includes('registrations');
         const isSetting = currentTab === 'settings';
-        const regBadge = isReg ? `<span class="registration-badge">${currentTab === 'course_registrations' ? 'MENTOR' : (currentTab === 'video_registrations' ? 'VIDEO' : 'TUTOR')}</span>` : (isSetting ? '<span class="registration-badge" style="background: rgba(255, 255, 255, 0.1); border-color: var(--border);">CONFIG</span>' : '');
+        const regBadge = isReg ? `<span class="registration-badge">${currentTab === 'course_registrations' ? 'MENTOR' : (currentTab === 'video_registrations' ? 'VIDEO' : (currentTab === 'merch_registrations' ? 'MERCH' : 'TUTOR'))}</span>` : (isSetting ? '<span class="registration-badge" style="background: rgba(255, 255, 255, 0.1); border-color: var(--border);">CONFIG</span>' : '');
 
         const editId = escapeHTML(item.id || item.key);
 
@@ -698,6 +698,42 @@ function renderFields(data = {}) {
                     <input type="text" value="${data.created_at ? new Date(data.created_at).toLocaleString('vi-VN') : ''}" readonly>
                 </div>
             </div>`;
+    } else if (currentTab === 'merch_registrations') {
+        fields = `
+            <div class="modal-grid-2col">
+                <div class="form-group">
+                    <label>Họ và tên</label>
+                    <input type="text" value="${safe(data.full_name)}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>MSSV</label>
+                    <input type="text" value="${safe(data.student_id)}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <input type="text" value="${safe(data.phone)}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Sản phẩm</label>
+                    <input type="text" value="${safe(data.merch_name)}" readonly style="color: var(--primary); font-weight: 600;">
+                </div>
+                <div class="form-group">
+                    <label>Số lượng</label>
+                    <input type="text" value="${safe(data.quantity)}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Tổng thanh toán</label>
+                    <input type="text" value="${data.total_price ? new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.total_price) : ''}" readonly style="color: var(--primary); font-weight: 700;">
+                </div>
+                <div class="form-group modal-grid-full">
+                    <label>Ghi chú</label>
+                    <textarea rows="2" readonly>${safe(data.note)}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Thời gian gửi</label>
+                    <input type="text" value="${data.created_at ? new Date(data.created_at).toLocaleString('vi-VN') : ''}" readonly>
+                </div>
+            </div>`;
     }
 
     dynamicFields.innerHTML = fields;
@@ -717,7 +753,8 @@ itemForm.addEventListener('submit', async (e) => {
         'settings': ['value'],
         'course_registrations': [],
         'video_registrations': [],
-        'tutor_registrations': []
+        'tutor_registrations': [],
+        'merch_registrations': []
     };
 
     const formData = new FormData(itemForm);

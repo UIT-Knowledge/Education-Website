@@ -1450,7 +1450,6 @@ select {
 }
 
 .video-duration {
-    display: none;
     position: absolute;
     right: 14px;
     bottom: 14px;
@@ -1465,6 +1464,11 @@ select {
     color: var(--dark-text);
     font-family: var(--font-mono);
     font-size: 15px;
+    backdrop-filter: blur(4px);
+}
+
+.video-duration:empty {
+    display: none;
 }
 
 .video-info,

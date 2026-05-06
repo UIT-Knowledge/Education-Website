@@ -72,6 +72,8 @@ menuToggle.addEventListener('click', () => {
     nav.classList.toggle('open');
 });
 
+let clickedNavId = null;
+
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
         menuToggle.classList.remove('active');
@@ -79,6 +81,7 @@ navLinks.forEach(link => {
         // Set active immediately — don't wait for scroll handler
         navLinks.forEach(l => l.classList.remove('active'));
         link.classList.add('active');
+        clickedNavId = link.dataset.section;
     });
 });
 
@@ -93,20 +96,39 @@ function updateActiveNav() {
         { navId: 'lien-he', el: findSectionTagByText('Giải đáp thắc mắc') },
     ].filter(entry => entry.el);
 
-    // Activate the section closest to the header bottom
+    // Priority: if user clicked a nav link, bias toward that section during scroll
     let activeId = 'gioi-thieu';
-    let minDist = Infinity;
-    for (const entry of triggerMap) {
-        const dist = Math.abs(entry.el.getBoundingClientRect().top - headerBottom);
-        if (dist < minDist) {
-            minDist = dist;
-            activeId = entry.navId;
+    if (clickedNavId) {
+        const clickedEntry = triggerMap.find(e => e.navId === clickedNavId);
+        if (clickedEntry) {
+            const clickedElTop = clickedEntry.el.getBoundingClientRect().top;
+            // Activate once the target section is near the header bottom (within 50% of viewport)
+            if (Math.abs(clickedElTop - headerBottom) < window.innerHeight * 0.3) {
+                activeId = clickedNavId;
+            }
+        }
+    }
+
+    // Fall back to distance-based detection if no click override
+    if (!clickedNavId) {
+        let minDist = Infinity;
+        for (const entry of triggerMap) {
+            const dist = Math.abs(entry.el.getBoundingClientRect().top - headerBottom);
+            if (dist < minDist) {
+                minDist = dist;
+                activeId = entry.navId;
+            }
         }
     }
 
     navLinks.forEach(link => {
         link.classList.toggle('active', link.dataset.section === activeId);
     });
+
+    // Clear clicked override once the target section is actually reached
+    if (clickedNavId && activeId === clickedNavId) {
+        clickedNavId = null;
+    }
 }
 
 function findSectionTagByText(text) {
@@ -928,6 +950,7 @@ function renderVideos(videos) {
             <div class="video-embed lite-youtube" data-video-id="${video.video_id}">
                 <div class="video-thumb" style="background-image: url('${video.thumbnail_url || `https://img.youtube.com/vi/${video.video_id}/maxresdefault.jpg`}')">
                     <div class="video-overlay"></div>
+                    <div class="video-duration">${video.duration || ''}</div>
                     <div class="video-play ${video.is_featured ? '' : 'small-play'}">
                         <svg width="${video.is_featured ? '24' : '20'}" height="${video.is_featured ? '24' : '20'}" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                     </div>
