@@ -25,9 +25,9 @@
     --dark-text: #ffffff;
     --dark-text-secondary: #e0e0e0;
     --dark-text-muted: #c0c0c0;
-    --accent: #3ecf8e;
-    --accent-strong: #00c573;
-    --accent-border: rgba(62, 207, 142, 0.3);
+    --accent: #3b82f6;
+    --accent-strong: #2563eb;
+    --accent-border: rgba(59, 130, 246, 0.3);
     --cyan: #00ffff;
     --cyan-border: rgba(0, 255, 255, 0.4);
     --cyan-glow: rgba(0, 255, 255, 0.25);
@@ -3398,7 +3398,7 @@ select {
 
 .radio-label:has(input:checked),
 .checkbox-label:has(input:checked) {
-    background: rgba(62, 207, 142, 0.08);
+    background: rgba(59, 130, 246, 0.08);
     border-color: var(--accent);
     color: var(--accent-strong);
 }
@@ -3413,7 +3413,7 @@ select {
     align-items: center;
     gap: 12px;
     padding: 16px;
-    background: rgba(62, 207, 142, 0.08);
+    background: rgba(59, 130, 246, 0.08);
     border-radius: var(--radius-md);
     border: 1px solid var(--accent-border);
     cursor: pointer;
@@ -3422,7 +3422,7 @@ select {
 }
 
 .form-group-highlight:hover {
-    background: rgba(62, 207, 142, 0.12);
+    background: rgba(59, 130, 246, 0.12);
     border-color: var(--accent);
 }
 
