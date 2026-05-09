@@ -1001,7 +1001,7 @@
 
                         <div class="form-group">
                             <label>Bạn vui lòng chọn các môn học muốn xem video <span class="required">*</span></label>
-                            <div class="checkbox-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));">
+                            <div class="checkbox-grid">
                                 <label class="checkbox-label"><input type="checkbox" name="courses" value="OOP"><span>Lập trình hướng đối tượng</span></label>
                                 <label class="checkbox-label"><input type="checkbox" name="courses" value="DSA"><span>Cấu trúc dữ liệu & Giải thuật</span></label>
                                 <label class="checkbox-label"><input type="checkbox" name="courses" value="XSTK"><span>Xác suất thống kê</span></label>
@@ -1010,6 +1010,31 @@
                                 <label class="checkbox-label"><input type="checkbox" name="courses" value="TCCS MT2"><span>Tổ chức và cấu trúc máy tính 2</span></label>
                                 <label class="checkbox-label"><input type="checkbox" name="courses" value="CSDL"><span>Cơ sở dữ liệu</span></label>
                                 <label class="checkbox-label"><input type="checkbox" name="courses" value="HĐH"><span>Hệ điều hành</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Discount checkbox for previous registrants -->
+                        <div class="form-group">
+                            <label class="form-group-highlight">
+                                <input type="checkbox" id="video-previous-registration" name="previous_registration" value="yes">
+                                <span>Bạn đã đăng ký trước đó chưa? <strong>Giảm 50%</strong> khi đăng ký lại</span>
+                            </label>
+                        </div>
+
+                        <!-- Price preview -->
+                        <div id="video-price-preview" class="price-preview">
+                            <div class="price-preview-row">
+                                <span>Tạm tính (<span id="video-course-count">0</span> môn):</span>
+                                <span id="video-original-price" style="font-weight: 600;">0₫</span>
+                            </div>
+                            <div id="video-discount-row" class="price-preview-row discount" style="display: none;">
+                                <span>Giảm 50% (đăng ký lại):</span>
+                                <span id="video-discount-amount" style="font-weight: 600;">-0₫</span>
+                            </div>
+                            <hr>
+                            <div class="price-preview-total">
+                                <span>Tổng cộng:</span>
+                                <span id="video-total-price" class="amount">0₫</span>
                             </div>
                         </div>
 

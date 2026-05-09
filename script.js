@@ -615,12 +615,15 @@ document.getElementById('video-form')?.addEventListener('submit', async (e) => {
     submitBtn.disabled = true;
     submitBtn.textContent = 'Đang gửi...';
 
+    const previousRegistration = formData.get('previous_registration') === 'yes';
+
     const data = {
         full_name: formData.get('full_name'),
         student_id: formData.get('student_id'),
         has_teams_email: formData.get('has_teams_email'),
         teams_email: formData.get('teams_email'),
-        courses: selectedCourses
+        courses: selectedCourses,
+        previous_registration: previousRegistration
     };
 
     try {
@@ -642,6 +645,11 @@ document.getElementById('video-form')?.addEventListener('submit', async (e) => {
         if (count >= 6) price = 330000;
         else price = prices[count] || (count * 100000);
 
+        // Apply 50% discount if previously registered
+        if (previousRegistration) {
+            price = Math.round(price / 2 / 1000) * 1000;
+        }
+
         const courseList = selectedCourses.join(', ');
         
         // Close video modal and open payment modal
@@ -661,6 +669,60 @@ document.getElementById('video-form')?.addEventListener('submit', async (e) => {
         submitBtn.textContent = 'Gửi đăng ký';
     }
 });
+
+// Live price preview for video registration
+function updateVideoPricePreview() {
+    const preview = document.getElementById('video-price-preview');
+    const countEl = document.getElementById('video-course-count');
+    const originalEl = document.getElementById('video-original-price');
+    const discountRow = document.getElementById('video-discount-row');
+    const discountEl = document.getElementById('video-discount-amount');
+    const totalEl = document.getElementById('video-total-price');
+    const discountCheckbox = document.getElementById('video-previous-registration');
+
+    if (!preview || !countEl) return;
+
+    const checked = document.querySelectorAll('#video-form input[name="courses"]:checked');
+    const count = checked.length;
+
+    if (count === 0) {
+        preview.style.display = 'none';
+        return;
+    }
+
+    const prices = { 1: 100000, 2: 160000, 3: 220000, 4: 265000, 5: 300000, 6: 330000 };
+    let originalPrice = count >= 6 ? 330000 : (prices[count] || count * 100000);
+    const hasDiscount = discountCheckbox ? discountCheckbox.checked : false;
+    let totalPrice = hasDiscount ? Math.round(originalPrice / 2 / 1000) * 1000 : originalPrice;
+
+    countEl.textContent = count;
+    originalEl.textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(originalPrice);
+
+    if (hasDiscount) {
+        discountRow.style.display = 'flex';
+        discountEl.textContent = '-' + new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(originalPrice - totalPrice);
+    } else {
+        discountRow.style.display = 'none';
+    }
+
+    totalEl.textContent = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice);
+    preview.style.display = 'block';
+}
+
+// Attach live preview events
+document.getElementById('video-form')?.addEventListener('change', (e) => {
+    if (e.target.matches('input[name="courses"]') || e.target.matches('input[name="previous_registration"]')) {
+        updateVideoPricePreview();
+    }
+});
+
+// Also update on modal open (reset visuals)
+const origOpenVideoModal = openVideoModal;
+openVideoModal = function() {
+    origOpenVideoModal.call(this);
+    const preview = document.getElementById('video-price-preview');
+    if (preview) preview.style.display = 'none';
+};
 
 // Tutor Registration Modal Functions
 function openTutorModal() {
