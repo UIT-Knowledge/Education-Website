@@ -635,14 +635,16 @@ document.getElementById('video-form')?.addEventListener('submit', async (e) => {
         let price = 0;
         const prices = {
             1: 100000,
-            2: 160000,
-            3: 220000,
-            4: 265000,
-            5: 300000,
-            6: 330000
+            2: 170000,
+            3: 230000,
+            4: 275000,
+            5: 310000,
+            6: 340000,
+            7: 365000,
+            8: 385000
         };
         
-        if (count >= 6) price = 330000;
+        if (count >= 8) price = 385000;
         else price = prices[count] || (count * 100000);
 
         // Apply 50% discount if previously registered
