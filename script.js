@@ -693,7 +693,7 @@ function updateVideoPricePreview() {
     }
 
     const prices = { 1: 100000, 2: 170000, 3: 230000, 4: 275000, 5: 310000, 6: 340000, 7: 365000, 8: 385000 };
-    let originalPrice = count >= 6 ? 330000 : (prices[count] || count * 100000);
+    let originalPrice = count >= 8 ? 385000 : (prices[count] || count * 100000);
     const hasDiscount = discountCheckbox ? discountCheckbox.checked : false;
     let totalPrice = hasDiscount ? Math.round(originalPrice / 2 / 1000) * 1000 : originalPrice;
 
